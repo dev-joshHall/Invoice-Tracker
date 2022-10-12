@@ -1,0 +1,24 @@
+// MongoDB Setup File
+// To run this in VS code, download the extention "MongoDB for VS Code" by MongoDB
+// The extention "Mongo Snippets for Node-js" by Rohan Mukherjee is also helpful
+// You can also modify this database by downloading the mongosh shell from "https://www.mongodb.com/docs/mongodb-shell/install/#std-label-mdb-shell-install"
+// You can view this database 
+
+// select the database to use.
+use('WinvoiceDB');
+
+// drop invoices collection (table)
+db.invoices.drop();
+
+// re-created the invoices collection with new sample items
+db.invoices.insertMany([
+    {_id: 1, date: new Date("2022-10-11"), description: "shipment", items: 20, cost: 150.0, paid: true},
+    {_id: 2, date: new Date("2022-10-10"), description: "shipment", items: 10, cost: 75.0, paid: true},
+    {_id: 3, date: new Date("2022-10-09"), description: "shipment", items: 40, cost: 300.0, paid: true},
+    {_id: 4, date: new Date("2022-10-08"), description: "shipment", items: 80, cost: 600.0, paid: true}
+])
+
+// display everything in invoices
+db.invoices.find();
+
+
