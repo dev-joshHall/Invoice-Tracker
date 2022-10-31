@@ -25,7 +25,7 @@ function Nav() {
                     </li>
                 </ul>
                 <hr/>
-                <div className="dropdown">
+                <div className="dropdown" style={{"width": "128px"}}>
                     <button className="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                         <img src="https://icons.veryicon.com/png/o/miscellaneous/two-color-icon-library/user-286.png" style={{"width": "30px"}}/>
                         Account
