@@ -1,22 +1,61 @@
 import React, {useMemo} from "react";
-import {useTable} from 'react-table'
+import {useTable, useSortBy, useGlobalFilter, usePagination,useRowSelect} from 'react-table'
 import MOCK_DATA from './MOCK_DATA.json'
 import {COLUMNS} from './columns'
 import './ViewTable.css'
+import { BsFillCaretDownFill,BsFillCaretUpFill } from "react-icons/bs";
+import { ViewTableSearch } from "./ViewTableSearch";
+import { CheckmarkBox } from "./CheckmarkBox";
 
 export const ViewTable = () => {
     console.log("viewtable")
     const columns = useMemo(() => COLUMNS, []) /*function returns COLUMNS with an empty dependency array. This is so data is not recreated on every render*/
     const data = useMemo(() => MOCK_DATA, []) /*function returns MOCK_DATA with an empty dependency array. This is so data is not recreated on every render*/
 
-    const tableInstance = useTable({ /*creating table instance*/
+    const {getTableProps, //{/*these are function that we can use for the table */}
+        getTableBodyProps, 
+        headerGroups, 
+        page, nextPage, 
+        previousPage, canNextPage, 
+        canPreviousPage, 
+        pageOptions, 
+        gotoPage,pageCount, 
+        prepareRow, 
+        state, 
+        setPageSize,
+        selectedFlatRows,
+        setGlobalFilter,
+        } = useTable({ /*creating table instance, functions and arrays provided by usetable package**/
         columns: columns, 
         data: data
-    })
+    },useGlobalFilter,/*enabling search*/
+    useSortBy,/*enabling sort*/
+    usePagination,/*setting up pages*/
+    useRowSelect,/*for checkbox*/
+    (hooks) => {/* this is to toggle checkbox*/
+        hooks.visibleColumns.push((columns) => {
+            return [
+                {
+                    id: 'selection',
+                    Header: ({getToggleAllRowsSelectedProps}) => (
+                        <CheckmarkBox {...getToggleAllRowsSelectedProps()}/>
+                    ),
+                    Cell: ({ row }) => 
+                        <CheckmarkBox {...row.getToggleRowSelectedProps()}/>,
+                    
+                },
+                ...columns,
+            ]
+        })
+    }
+    ) 
+    const {globalFilter,pageIndex,pageSize} = state  /*getting a state of the table**/
 
-    const {getTableProps, getTableBodyProps, headerGroups, rows, prepareRow} = tableInstance /*functions and arrays provided by usetable package*/
+
     return (
-        //creating table with html this is the format to use the above functions and arrays
+        <>
+        <ViewTableSearch filter = {globalFilter} setFilter = {setGlobalFilter} id = 'search' />{/*Search icon */}
+        {/*creating table with html this is the format to use with the above functions and arrays*/}
         <table {...getTableProps()} id = "#view-docs"> 
             <thead>
                 {
@@ -24,7 +63,10 @@ export const ViewTable = () => {
                     <tr {... headerGroup.getHeaderGroupProps()}>
                         {
                             headerGroup.headers.map((columns) =>(
-                                <th {...columns.getHeaderProps()}>{columns.render('Header')}</th>
+                                <th {...columns.getHeaderProps(columns.getSortByToggleProps())}>{columns.render('Header')}
+                                <span>
+                                    {columns.isSorted ? (columns.isSortedDesc ? <BsFillCaretDownFill/> : <BsFillCaretUpFill/>) : ''} {/*this is for implimenting sort icons*/}
+                                </span></th>
                         ))}
 
                     </tr>
@@ -33,7 +75,7 @@ export const ViewTable = () => {
             </thead>
             <tbody {...getTableBodyProps()}>
                 {
-                    rows.map(row => {
+                    page.map(row => {
                         prepareRow(row)
                         return(
                             <tr {...row.getRowProps()}>
@@ -46,5 +88,56 @@ export const ViewTable = () => {
                     })}
             </tbody>
         </table>
+        <div>
+
+            <span>{/*this span is for setting up the page jumps*/ }
+                | Go to page: {' '}
+                <input type = 'number' defaultValue={pageIndex +1}
+                onChange ={e =>{
+                    const pageNumber = e.target.value ? Number(e.target.value) - 1: 0
+                    gotoPage(pageNumber)
+                }}
+                style ={{width : '50px'}}/>
+            </span>
+
+            <button onClick = {() => gotoPage(0)} disabled={!canPreviousPage}>{/*jumping to end button*/}
+                    {'<<'}
+            </button>
+            <button onClick = {() => previousPage()} disabled ={!canPreviousPage}>Previous</button>
+            <span>{/*this span is to show what page and how many pages*/ }
+                Page{' '}
+                <strong>
+                    {pageIndex + 1} of {pageOptions.length}
+                </strong>
+            </span>
+            <button onClick = {() => nextPage()} disabled ={!canNextPage}>Next</button>
+            <button onClick = {() => gotoPage(pageCount -1)} disabled={!canNextPage}>{/*jumping to begining button*/}
+                    {'>>'}
+            </button>
+            <select value={pageSize} onChange={e => setPageSize(Number(e.target.value))}>{/*this select is for setting page size*/ }
+                {[10,25,50].map((pageSize) => (
+                    <option key ={pageSize} value ={pageSize}>
+                        Show {pageSize}
+                    </option>
+                ))
+
+                }
+
+            </select>
+
+            <pre>{/* this is to show all the checkmarked boxes info at the bottom..... Not working yet and only for reference*/ }
+                <code>
+                    {JSON.stringify(
+                        {
+                        selectedFlatRows: selectedFlatRows.map((row) => row.origional),
+                        },
+                        null,
+                        2
+                    )}
+                </code>
+            </pre>
+
+        </div>
+        </>
     )
 }
