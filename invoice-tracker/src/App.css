@@ -37,7 +37,48 @@
   }
 }
 
+@keyframes uploadS1S2 {
+  from {
+    width: 5%;
+  }
+  to {
+    width: 33.33%;
+  }
+}
+
+@keyframes uploadS2 {
+  from {
+    width: 33.33%;
+  } to {
+    width: 33.34%;
+  }
+}
+
 #upload-icon {
   margin: 10px;
   width: 25px;
+}
+
+#updocs-img {
+  display: block;
+  margin: auto;
+  width: 200px;
+}
+
+.progress {
+  display: block;
+  margin: auto;
+  width: 25%;
+}
+
+#uploadPBar {
+  width: 5%;
+}
+
+.step1 {
+  animation: uploadS1S2 1s ease;
+}
+
+.s1-finished {
+  animation: uploadS2 1s ease infinite;
 }
