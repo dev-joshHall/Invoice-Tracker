@@ -9,26 +9,28 @@ import ViewClickHandler from './components/Nav'
 import Dashboard from './components/Dashboard';
 import UploadMainPage from './components/UploadMainPage';
 import BulkUpload from './components/BulkUpload';
+import Test from './components/test';
 
 
 class App extends Component {
-  state = {  } 
-  render() { 
+  state = {}
+  render() {
     return (
       <Router>
         <Navbar />
         <Routes>
-          <Route path='/' exact element={<Dashboard/>} />
-          <Route path='/view-table' element={<ViewTable/>} />
-          <Route path='/upload' element={<UploadMainPage/>} />
-          <Route path='/upload/:upload-docs' element={<BulkUpload/>} />
+          <Route path='/' exact element={<Dashboard />} />
+          <Route path='/view-table' element={<ViewTable />} />
+          <Route path='/upload' element={<UploadMainPage />} />
+          <Route path='/upload/:upload-docs' element={<BulkUpload />} />
+          <Route path='/test' element={<Test />} />
         </Routes>
       </Router>
-      
+
     );
   }
 }
- 
+
 export default App;
 
 
