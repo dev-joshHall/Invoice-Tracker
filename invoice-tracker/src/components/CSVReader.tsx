@@ -92,6 +92,7 @@ export default function CSVReader(props) {
       onUploadAccepted={(results: any) => {
         props.stateChanger({jsonUploadedData: results});
         setZoneHover(false);
+        // console.log(results.data[0])
         if (results) {
           setTimeout(()=> {
             $('#step1NextBtn').attr('disabled', false);

@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import ChooseFileUpload from './ChooseFIleUpload';
 import UploadProgress from './UploadProgress';
-import { useCSVReader } from 'react-papaparse';
 import $ from 'jquery';
 import AttributeMatch from './AttributeMatch';
+import UploadOrCancel from './UploadOrCancel';
+import UploadSuccess from './UploadSuccess';
 
 class BulkUpload extends Component {
 
@@ -20,6 +21,7 @@ class BulkUpload extends Component {
 
     updateProgBar1 = () => {
         const $pBarEl = $('#uploadPBar');
+        $pBarEl.removeClass('s4-finished');
         $pBarEl.addClass('step1');
         setTimeout(()=>{
             $pBarEl.removeClass('step1');
@@ -29,11 +31,28 @@ class BulkUpload extends Component {
 
     updateProgBar2 = () => {
         const $pBarEl = $('#uploadPBar');
+        $pBarEl.removeClass('s1-finished');
         $pBarEl.addClass('step2');
         setTimeout(()=>{
             $pBarEl.removeClass('step2');
             $pBarEl.addClass('s2-finished');
         }, 1000);
+    }
+
+    updateProgBar3 = () => {
+        const $pBarEl = $('#uploadPBar');
+        $pBarEl.removeClass('s2-finished');
+        $pBarEl.addClass('step3');
+        setTimeout(()=>{
+            $pBarEl.removeClass('step3');
+            $pBarEl.addClass('s3-finished');
+        }, 1000);
+    }
+
+    resetProgBar = () => {
+        const $pBarEl = $('#uploadPBar');
+        $pBarEl.removeClass('s3-finished');
+        $pBarEl.addClass('s4-finished');
     }
 
     render() {
@@ -49,6 +68,16 @@ class BulkUpload extends Component {
                 stateChanger={this.setState}
                 jsonData={this.state.jsonUploadedData}
                 updateProgBar={this.updateProgBar2}
+            />}
+            {this.state.uploadStep===3 && <UploadOrCancel
+                stateChanger={this.setState}
+                jsonData={this.state.jsonUploadedData}
+                updateProgBar={this.updateProgBar3}
+            />}
+            {this.state.uploadStep===4 && <UploadSuccess
+                stateChanger={this.setState}
+                jsonData={this.state.jsonUploadedData}
+                updateProgBar={this.resetProgBar}
             />}
         </div> );
     }
