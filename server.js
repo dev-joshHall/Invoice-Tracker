@@ -23,6 +23,7 @@ mongoose.connection.on('connected', () => {
     console.log("Mongo DB Connected");
 });
 
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }))
 

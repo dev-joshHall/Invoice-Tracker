@@ -43,11 +43,12 @@ class test extends Component {
             })
 
     }
-
+    //can change the name of function
     getTestData = () => {
         axios.get('http://localhost:8080/api/test')
             .then((response) => {
                 const data = response.data
+                //can change testData to mach any array you set in the state
                 this.setState({ testData: data })
                 console.log("Data has been recieved")
 
@@ -62,7 +63,11 @@ class test extends Component {
 
         return testDatas.map((data, index) => (
             <div key={index}>
-                <p> {data.name} </p>
+                <div> {data.description.map((data, index) => (
+                    <div key={index}>
+                        <p>{data}</p>
+                    </div>
+                ))} </div>
             </div>
         ));
     };
