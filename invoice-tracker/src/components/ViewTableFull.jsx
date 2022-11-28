@@ -1,53 +1,49 @@
 import React, {useMemo} from "react";
 import {useTable, useSortBy, useGlobalFilter, usePagination,useRowSelect} from 'react-table'
 import MOCK_DATA from './MOCK_DATA.json'
-import {COLUMNS} from './columns'
+import {COLUMNS} from './columnsFull'
 import './ViewTable.css'
 import { BsFillCaretDownFill,BsFillCaretUpFill } from "react-icons/bs";
 import { ViewTableSearch } from "./ViewTableSearch";
 import { CheckmarkBox } from "./CheckmarkBox";
 import {NavLink} from './NavbarElements';
-import test from "./test";
-import axios from 'axios';
-import getTestData from './test'
+import {CSVDownload, CSVLink} from 'react-csv';
 
 
-export const ViewTable = () => {
-
-    console.log("before")
-    const testData =[]
-    test.getInvoiceData = () => {
-        axios.get('http://localhost:8080/api/test')
-            .then((response) => {
-                const dataDB = response.data
-                //can change testData to mach any array you set in the state
-                this.setState({ invoiceData: dataDB })
-                console.log("Data has been recieved")
-
-            })
-            .catch(() => {
-                console.log("error has occured")
-            })
-    }
-    console.log(testData)
-    console.log("viewtable")
+export const ViewTableFull = () => {
+    console.log("viewtable Full")
     
     const columns = useMemo(() => COLUMNS, []) /*function returns COLUMNS with an empty dependency array. This is so data is not recreated on every render*/
     const data = useMemo(() => MOCK_DATA, []) /*function returns MOCK_DATA with an empty dependency array. This is so data is not recreated on every render*/
 
+    let csv = [["id",//creating csv
+    "invoiceNumber",
+    "product",
+    "description",
+    "orderedQuantity",
+    "unitOfMeasure",
+    "unitPrice",
+    "total",
+    "taxes",
+    "bulkId",
+    "attributes",
+    "companyName",
+    "billedDate",
+    "phoneNumber",
+    "email",
+    "streetAddress",
+    "address 2",
+    "zip",
+    "city",
+    "state",
+    "country"]];
 
-    const checkedIds = []
-
-    const gatherIds =() =>{
-        checkedIds.push(this.state.id)
-        console.log("pushed " + this.state.id)
-    }
-
-    const theseIds = () =>  {
-        console.log("userowselect: " + selectedFlatRows)
-    }
-
-
+    data.map(x => {
+       csv.push([
+           x.id, x.invoiceNumber,x.product,x.description,x.orderedQuantity,x.unitOfMeasure,x.unitPrice, x.total,x.taxes,x.bulkId,x.attributes,x.companyName,x.billedDate,
+           x.phoneNumber,x.email,x.streetAddress,x['address 2'],x.zip, x.city, x.state,x.country
+       ])
+    })
 
     const {getTableProps, //{/*these are function that we can use for the table */}
         getTableBodyProps, 
@@ -71,18 +67,14 @@ export const ViewTable = () => {
     useRowSelect,/*for checkbox*/
     (hooks) => {/* this is to toggle checkbox*/
         hooks.visibleColumns.push((columns) => {
-
-          
             return [
                 {
                     id: 'selection',
                     Header: ({getToggleAllRowsSelectedProps}) => (
-                        <CheckmarkBox {...getToggleAllRowsSelectedProps()}  />
-                        
+                        <CheckmarkBox {...getToggleAllRowsSelectedProps()}/>
                     ),
-                    Cell: ({ row }) => (
-                         <CheckmarkBox {...row.getToggleRowSelectedProps()}  />
-                    )
+                    Cell: ({ row }) => 
+                        <CheckmarkBox {...row.getToggleRowSelectedProps()}/>,
                     
                 },
                 ...columns,
@@ -95,9 +87,7 @@ export const ViewTable = () => {
 
     return (
         <>
-        <ViewTableSearch filter = {globalFilter} setFilter = {setGlobalFilter} id = 'search' high/>{/*Search icon */}
-
-      
+        <ViewTableSearch filter = {globalFilter} setFilter = {setGlobalFilter} id = 'search' />{/*Search icon */}
         {/*creating table with html this is the format to use with the above functions and arrays*/}
         <table {...getTableProps()} id = "#view-docs"> 
             <thead>
@@ -132,6 +122,11 @@ export const ViewTable = () => {
             </tbody>
         </table>
         <div>
+        <NavLink to='/view-table'>
+                <button className='getResults btn-primary m-2'>
+                    Go Back
+                </button>
+            </NavLink>
 
             <span>{/*this span is for setting up the page jumps*/ }
                 | Go to page: {' '}
@@ -167,15 +162,14 @@ export const ViewTable = () => {
                 }
 
             </select>
-            <NavLink to='/view-full'>
-                <button className='getResults btn-primary m-2' selectedFlatRows>
-                    Get Results
-                </button>
-            </NavLink>
+            <button className="exportBtn">
+                
+            <CSVLink data={csv} target='_blank' >Export CSV </CSVLink> {/*csv download link*/}
+            </button>
 
 
         </div>
         </>
     )
 }
-export default ViewTable;
+export default ViewTableFull;

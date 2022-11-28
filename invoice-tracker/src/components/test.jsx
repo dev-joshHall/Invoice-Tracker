@@ -5,7 +5,8 @@ class test extends Component {
     state = {
         name: '',
         note: '',
-        testData: []
+        testData: [],
+        invoiceData:[]
     }
 
     componentDidMount = () => {
