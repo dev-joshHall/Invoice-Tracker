@@ -83,16 +83,16 @@ const Navbar = () => {
 return (
     <Nav>
         <Bars />
-
         <NavMenu>
+            <h1 style = {{"marginRight": "100px", "color": "White"}}> WINVOICE </h1> 
             <NavLink to='/'>
-                <span style={{"color": "red"}}>Dashboard</span>
+                <span style={{"color": "white"}}>Dashboard</span>
             </NavLink>
             <NavLink to='/upload'>
-                <span style={{"color": "red"}}>Upload</span>
+                <span style={{"color": "white"}}>Upload</span>
             </NavLink>
             <NavLink to='/view-table'>
-                <span style={{"color": "red"}}>View</span>
+                <span style={{"color": "white"}}>View</span>
             </NavLink>
         </NavMenu>
         
