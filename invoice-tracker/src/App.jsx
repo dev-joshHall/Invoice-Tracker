@@ -26,6 +26,7 @@ class App extends Component {
           <Route path='/upload' element={<UploadMainPage />} />
           <Route path='/upload/:upload-docs' element={<BulkUpload />} />
           <Route path='/test' element={<Test />} />
+          <Route path='/CreateRecord' element={<CreateRecord />} />
         </Routes>
       </Router>
 
