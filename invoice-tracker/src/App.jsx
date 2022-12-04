@@ -10,6 +10,7 @@ import Dashboard from './components/Dashboard';
 import UploadMainPage from './components/UploadMainPage';
 import BulkUpload from './components/BulkUpload';
 import Test from './components/test';
+import CreateRecord from './components/CreateRecord'
 
 
 class App extends Component {
@@ -24,6 +25,7 @@ class App extends Component {
           <Route path='/upload' element={<UploadMainPage />} />
           <Route path='/upload/:upload-docs' element={<BulkUpload />} />
           <Route path='/test' element={<Test />} />
+          <Route path='/CreateRecord' element={<CreateRecord />} />
         </Routes>
       </Router>
 

@@ -45,7 +45,7 @@ class test extends Component {
     }
     //can change the name of function
     getTestData = () => {
-        axios.get('http://localhost:8080/api/test')
+        axios.get('http://localhost:8080/api/getinvoicedata-All')
             .then((response) => {
                 const data = response.data
                 //can change testData to mach any array you set in the state

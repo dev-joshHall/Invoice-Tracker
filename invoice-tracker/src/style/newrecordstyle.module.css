@@ -1,0 +1,63 @@
+.input {
+    outline: 0;
+    border-width: 0 0 2px;
+    border-color: grey;
+    background-color: transparent;
+    display: inline-block;
+    height: 20px;
+    width: 300px;
+}
+
+.input:focus {
+    border-color: rgb(50, 190, 255);
+    word-wrap: break-word;
+    word-break: break-all;
+    height: 20px;
+}
+
+.sectionName {
+    font-size: 25px;
+    display: block;
+}
+
+.form {
+    margin: 25px;
+    padding: 15px;
+    background: rgb(224, 224, 224);
+}
+
+.title {
+    padding: 25px;
+}
+
+.sectionTitle {
+    display: block;
+    font-weight: 600;
+    font-size: 22px;
+    margin-top: 25px;
+}
+
+.inputTitle {
+    width: 100px;
+}
+
+.inputBox {
+    width: 150px;
+    display: inline-block;
+    vertical-align: top;
+}
+
+
+
+.section {
+    display: block;
+}
+
+.create {
+    width: 300px;
+    margin-top: 20px;
+}
+
+.inlineBox {
+    margin-top: 5px;
+}
