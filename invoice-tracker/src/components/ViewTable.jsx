@@ -6,11 +6,48 @@ import './ViewTable.css'
 import { BsFillCaretDownFill,BsFillCaretUpFill } from "react-icons/bs";
 import { ViewTableSearch } from "./ViewTableSearch";
 import { CheckmarkBox } from "./CheckmarkBox";
+import {NavLink} from './NavbarElements';
+import test from "./test";
+import axios from 'axios';
+import getTestData from './test'
+
 
 export const ViewTable = () => {
+
+    console.log("before")
+    const testData =[]
+    test.getInvoiceData = () => {
+        axios.get('http://localhost:8080/api/test')
+            .then((response) => {
+                const dataDB = response.data
+                //can change testData to mach any array you set in the state
+                this.setState({ invoiceData: dataDB })
+                console.log("Data has been recieved")
+
+            })
+            .catch(() => {
+                console.log("error has occured")
+            })
+    }
+    console.log(testData)
     console.log("viewtable")
+    
     const columns = useMemo(() => COLUMNS, []) /*function returns COLUMNS with an empty dependency array. This is so data is not recreated on every render*/
     const data = useMemo(() => MOCK_DATA, []) /*function returns MOCK_DATA with an empty dependency array. This is so data is not recreated on every render*/
+
+
+    const checkedIds = []
+
+    const gatherIds =() =>{
+        checkedIds.push(this.state.id)
+        console.log("pushed " + this.state.id)
+    }
+
+    const theseIds = () =>  {
+        console.log("userowselect: " + selectedFlatRows)
+    }
+
+
 
     const {getTableProps, //{/*these are function that we can use for the table */}
         getTableBodyProps, 
@@ -34,14 +71,18 @@ export const ViewTable = () => {
     useRowSelect,/*for checkbox*/
     (hooks) => {/* this is to toggle checkbox*/
         hooks.visibleColumns.push((columns) => {
+
+          
             return [
                 {
                     id: 'selection',
                     Header: ({getToggleAllRowsSelectedProps}) => (
-                        <CheckmarkBox {...getToggleAllRowsSelectedProps()}/>
+                        <CheckmarkBox {...getToggleAllRowsSelectedProps()}  />
+                        
                     ),
-                    Cell: ({ row }) => 
-                        <CheckmarkBox {...row.getToggleRowSelectedProps()}/>,
+                    Cell: ({ row }) => (
+                         <CheckmarkBox {...row.getToggleRowSelectedProps()}  />
+                    )
                     
                 },
                 ...columns,
@@ -54,7 +95,9 @@ export const ViewTable = () => {
 
     return (
         <>
-        <ViewTableSearch filter = {globalFilter} setFilter = {setGlobalFilter} id = 'search' />{/*Search icon */}
+        <ViewTableSearch filter = {globalFilter} setFilter = {setGlobalFilter} id = 'search' high/>{/*Search icon */}
+
+      
         {/*creating table with html this is the format to use with the above functions and arrays*/}
         <table {...getTableProps()} id = "#view-docs"> 
             <thead>
@@ -124,20 +167,15 @@ export const ViewTable = () => {
                 }
 
             </select>
+            <NavLink to='/view-full'>
+                <button className='getResults btn-primary m-2' selectedFlatRows>
+                    Get Results
+                </button>
+            </NavLink>
 
-            <pre>{/* this is to show all the checkmarked boxes info at the bottom..... Not working yet and only for reference*/ }
-                <code>
-                    {JSON.stringify(
-                        {
-                        selectedFlatRows: selectedFlatRows.map((row) => row.origional),
-                        },
-                        null,
-                        2
-                    )}
-                </code>
-            </pre>
 
         </div>
         </>
     )
 }
+export default ViewTable;

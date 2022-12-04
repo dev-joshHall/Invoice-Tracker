@@ -208,6 +208,7 @@
     "querystring-es3": "^0.2.1",
     "randombytes": "^2.1.0",
     "randomfill": "^1.0.4",
+    "react-csv": "^2.2.2",
     "react-papaparse": "^4.1.0",
     "readable-stream": "^2.3.7",
     "readdirp": "^3.6.0",
@@ -277,14 +278,12 @@
     "wmf": "^1.0.2",
     "word": "^0.3.0",
     "worker-farm": "^1.7.0",
-    "worker-loader": "^2.0.0",
     "wrappy": "^1.0.2",
     "xlsx": "^0.16.9",
     "xtend": "^4.0.2",
     "y18n": "^4.0.3",
     "yallist": "^3.1.1"
   },
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "node server.js",
