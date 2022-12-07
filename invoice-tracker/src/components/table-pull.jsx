@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 
-function TablePull() {
+function TablePull(props) {
+
+
+
+    
     return ( <React.Fragment></React.Fragment> );
 }
 

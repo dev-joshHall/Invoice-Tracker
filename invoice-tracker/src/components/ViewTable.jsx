@@ -10,6 +10,7 @@ import {NavLink} from './NavbarElements';
 import test from "./test";
 import axios from 'axios';
 import getTestData from './test'
+import TablePull from "./table-pull";
 
 
 export const ViewTable = () => {
@@ -97,7 +98,9 @@ export const ViewTable = () => {
         <>
         <ViewTableSearch filter = {globalFilter} setFilter = {setGlobalFilter} id = 'search' high/>{/*Search icon */}
 
-      
+        <TablePull
+            
+        /> // change?
         {/*creating table with html this is the format to use with the above functions and arrays*/}
         <table {...getTableProps()} id = "#view-docs"> 
             <thead>
