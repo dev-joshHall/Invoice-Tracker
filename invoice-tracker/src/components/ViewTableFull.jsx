@@ -8,6 +8,7 @@ import { ViewTableSearch } from "./ViewTableSearch";
 import { CheckmarkBox } from "./CheckmarkBox";
 import {NavLink} from './NavbarElements';
 import {CSVDownload, CSVLink} from 'react-csv';
+import TablePull from "./table-pull";
 
 
 export const ViewTableFull = () => {
@@ -87,6 +88,7 @@ export const ViewTableFull = () => {
 
     return (
         <>
+        <TablePull />
         <ViewTableSearch filter = {globalFilter} setFilter = {setGlobalFilter} id = 'search' />{/*Search icon */}
         {/*creating table with html this is the format to use with the above functions and arrays*/}
         <table {...getTableProps()} id = "#view-docs"> 
@@ -169,6 +171,15 @@ export const ViewTableFull = () => {
 
 
         </div>
+        <code>
+      {JSON.stringify(
+            {
+              selectedFlatRows: selectedFlatRows.map((row) => row.original)
+            },
+            null,
+            2
+          )}
+      </code>
         </>
     )
 }
