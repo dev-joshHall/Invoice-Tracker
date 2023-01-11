@@ -26,6 +26,24 @@ table {
     size: 10px;
     
   }
-  .search{
+  #search{
     padding: 12px;
+    color: blue;
+  }
+  #paginationResultsSection{
+    display: flex;
+    background-color: #04AA6D;
+    
+  }
+  #getResultsSection{
+
+    max-width: 200px;
+  }
+  #pagination{
+    align-self: center;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    
+    
   }
