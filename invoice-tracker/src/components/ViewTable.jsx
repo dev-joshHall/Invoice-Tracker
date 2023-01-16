@@ -29,6 +29,7 @@ export const ViewTable = () => {
                 console.log("error has occured")
             })
     }
+    
     console.log(testData)
     console.log("viewtable")
     

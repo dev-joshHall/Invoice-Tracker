@@ -62,6 +62,34 @@ router.post('/api/singleInvoicePost', (req, res) => {
 
 })
 
+router.post('/api/BulkInvoicePost', (req, res) => {
+    async function main() {
+        const data = req.body
+        console.log(data);
+        const uri = "mongodb+srv://WinvoiceDB:Winvoice4TheWin@cluster0.erdkqut.mongodb.net/?retryWrites=true&w=majority"
+        const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true })
+        try {
+            await client.connect();
+            //await listDatabases(client);
+            await createInvoice(client, data);
+            //await findOneListingByName(client, "");
+
+        } catch (e) {
+            console.error(e)
+        } finally {
+            await client.close();
+        }
+    }
+
+    async function createInvoice(client, newInvoice) {
+        const result = await client.db("WinvoiceDB").collection("invoice_record").insertMany(newInvoice);
+        console.log(result)
+    }
+
+    main().catch(console.err);
+
+})
+
 router.get('/api/getNewInvoiceNumber', (req, res) => {
     async function main() {
         const uri = "mongodb+srv://WinvoiceDB:Winvoice4TheWin@cluster0.erdkqut.mongodb.net/?retryWrites=true&w=majority"
