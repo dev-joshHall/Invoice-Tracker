@@ -6,6 +6,8 @@ class UploadOrCancel extends Component {
     onUploadPressed = () => {
         this.props.stateChanger({uploadStep: 4});
         this.props.updateProgBar();
+        // upload
+        this.props.submitData()
     }
 
     onCancelPressed = () => {
