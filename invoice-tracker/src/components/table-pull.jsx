@@ -20,7 +20,7 @@ class TablePull extends Component{
                 console.log("pulled data")
                 
                 pulledData = data
-                console.log(pulledData)
+                //console.log(pulledData)
                 
             })
             .catch(() => {
@@ -30,7 +30,7 @@ class TablePull extends Component{
     render(){
         return ( 
             <div>
-                {/*<ViewTable pulledData ={this.data}/>*/}
+                <ViewTable pulledData ={this.pulledData}/>
             </div>
                 
             

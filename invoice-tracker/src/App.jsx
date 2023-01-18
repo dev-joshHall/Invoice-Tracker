@@ -22,7 +22,7 @@ class App extends Component {
         <Navbar />
         <Routes>
           <Route path='/' exact element={<Dashboard />} />
-          <Route path='/view-table' element={<ViewTable />} />
+          <Route path='/view-table' element={<ViewTable/>} />
           <Route path='/upload' element={<UploadMainPage />} />
           <Route path='/upload/:upload-docs' element={<BulkUpload />} />
           <Route path='/test' element={<Test />} />

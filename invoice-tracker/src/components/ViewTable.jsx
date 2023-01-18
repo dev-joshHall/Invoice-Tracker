@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState,useEffect } from "react";
 import {
   useTable,
   useSortBy,
@@ -14,19 +14,44 @@ import { ViewTableSearch } from "./ViewTableSearch";
 import { CheckmarkBox } from "./CheckmarkBox";
 import { NavLink } from "./NavbarElements";
 import TablePull from "./table-pull";
+import axios from 'axios';
+import ViewTableFull from "./ViewTableFull";
 
-export const ViewTable = (pulledData) => {
-  console.log("before");
-  console.log("props");
-  console.log(pulledData)
+export const ViewTable = (props) => {
+
+  const [data,setData] = useState([]);
+  const [selectedRows, setSelectedRows] = React.useState([]);
+
   const columns = useMemo(
     () => COLUMNS,
     []
   ); /*function returns COLUMNS with an empty dependency array. This is so data is not recreated on every render*/
-  const data = useMemo(
-    () => MOCK_DATA,
-    []
-  ); /*function returns MOCK_DATA with an empty dependency array. This is so data is not recreated on every render*/
+
+
+useEffect(() => {
+  let active = true
+  load()
+  return () => { active = false }
+
+  async function load() {
+    setData([]) // this is optional
+    const res = await axios.get("http://localhost:8080/api/getinvoicedata-All")
+    .then((response) => {
+        const data1 = response.data
+
+        console.log("Data has been recieved")
+        console.log("pulled data")
+        console.log(data1)
+        
+        return data1;
+        
+    })
+    if (!active) { return }
+    setData(res)
+  }
+}, [])
+
+
 
   const checkedIds = [];
 
@@ -38,7 +63,8 @@ export const ViewTable = (pulledData) => {
   const theseIds = () => {
     //console.log("userowselect: " + selectedFlatRows);
   };
-
+  console.log("new data")
+  console.log(data)
   const {
     getTableProps, //{/*these are function that we can use for the table */}
     getTableBodyProps,
@@ -87,11 +113,10 @@ export const ViewTable = (pulledData) => {
   );
   const { globalFilter, pageIndex, pageSize } =
     state; /*getting a state of the table**/
-    console.log("after")
-  return (
+
+   return (
     <>
-      {/*<TablePull pulledData ={props.pulledData}/> // change?*/}
-      <TablePull/> 
+
       <ViewTableSearch
         filter={globalFilter}
         setFilter={setGlobalFilter}
@@ -142,7 +167,7 @@ export const ViewTable = (pulledData) => {
       </table>
       <div id="paginationResultsSection">
         <NavLink to="/view-full" id="getResultsSection">
-          <button className="getResults btn-primary m-2" >
+          <button className="getResults btn-primary m-2" onClick ={() =>ViewTableFull(selectedFlatRows)} >
             Get Results
           </button>
         </NavLink>

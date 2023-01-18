@@ -1,4 +1,4 @@
-import React, {useMemo} from "react";
+import React, {useMemo,useEffect,useState} from "react";
 import {useTable, useSortBy, useGlobalFilter, usePagination,useRowSelect} from 'react-table'
 import MOCK_DATA from './MOCK_DATA.json'
 import {COLUMNS} from './columnsFull'
@@ -9,13 +9,39 @@ import { CheckmarkBox } from "./CheckmarkBox";
 import {NavLink} from './NavbarElements';
 import {CSVDownload, CSVLink} from 'react-csv';
 import TablePull from "./table-pull";
+import axios from 'axios';
 
 
-export const ViewTableFull = () => {
+export const ViewTableFull = (props) => {
     console.log("viewtable Full")
+    console.log("selectedFlatRows")
+    console.log(props.selectedFlatRows)
     
+    const [data,setData] = useState([]);
     const columns = useMemo(() => COLUMNS, []) /*function returns COLUMNS with an empty dependency array. This is so data is not recreated on every render*/
-    const data = useMemo(() => MOCK_DATA, []) /*function returns MOCK_DATA with an empty dependency array. This is so data is not recreated on every render*/
+    
+    useEffect(() => {
+        let active = true
+        load()
+        return () => { active = false }
+      
+        async function load() {
+          setData([]) // this is optional
+          const res = await axios.get("http://localhost:8080/api/getinvoicedata-All")
+          .then((response) => {
+              const data1 = response.data
+      
+              console.log("Data has been recieved")
+              console.log("pulled data")
+              console.log(data1)
+              
+              return data1;
+              
+          })
+          if (!active) { return }
+          setData(res)
+        }
+      }, [])
 
     let csv = [["id",//creating csv
     "invoiceNumber",
@@ -88,7 +114,6 @@ export const ViewTableFull = () => {
 
     return (
         <>
-        <TablePull />
         <ViewTableSearch filter = {globalFilter} setFilter = {setGlobalFilter} id = 'search' />{/*Search icon */}
         {/*creating table with html this is the format to use with the above functions and arrays*/}
         <table {...getTableProps()} id = "#view-docs"> 
