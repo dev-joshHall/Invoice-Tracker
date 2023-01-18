@@ -5,11 +5,13 @@ import $ from 'jquery';
 import AttributeMatch from './AttributeMatch';
 import UploadOrCancel from './UploadOrCancel';
 import UploadSuccess from './UploadSuccess';
+import axios from 'axios';
 
 class BulkUpload extends Component {
 
     state = {
         jsonUploadedData: {},
+        note: '',
         uploadStep: 1,
         progBarPercent: 0,
     }
@@ -55,6 +57,68 @@ class BulkUpload extends Component {
         $pBarEl.addClass('s4-finished');
     }
 
+    // formatAMPM = () => {
+    //     var hours = Date.getHours();
+    //     var minutes = Date.getMinutes();
+    //     var ampm = hours >= 12 ? 'pm' : 'am';
+    //     hours = hours % 12;
+    //     hours = hours ? hours : 12; // the hour '0' should be '12'
+    //     minutes = minutes < 10 ? '0'+minutes : minutes;
+    //     var strTime = hours + ':' + minutes + ' ' + ampm;
+    //     return strTime;
+    //   }
+
+    axiosCall = (inv) => {
+        axios({
+            url: 'http://localhost:8080/api/singleInvoicePost',
+            method: 'POST',
+            data: inv
+        })
+            .then(() => {
+                console.log('Success')
+            })
+            .catch(() => {
+                console.log('ERROR')
+            })
+    }
+
+    submitData = (event) => {
+        // event.preventDefault();
+
+        // do one for every invoice
+        const copiedData = [...this.state.jsonUploadedData.data];
+        const headers = copiedData[0];
+        copiedData.splice(0,1);
+
+        const labeledData = []; // array of labeled invoice objects
+        for (const inv of copiedData) {
+            const labeledInv = {};
+            for (let i = 0; i < headers.length; i++) {
+                labeledInv[headers[i]] = inv[i];
+            }
+            labeledData.push(labeledInv);
+        }
+        
+        // assign bulk_id
+        // bulk_id is <datetime in ms>-<random number>
+        let timeStr = `${Date.now()}-${Math.round(Math.random()*1000).toString().padStart(4, '0')}`;
+        console.log(timeStr);
+        // let uploadDate = `${Date.prototype.getMonth()}-${Date.prototype.getDate()}-${Date.prototype.getFullYear()}`;
+        // let uploadTime = this.formatAMPM();
+
+        for (const inv of labeledData) {
+            inv.bulk_id = timeStr;
+            // inv.uploadDate = uploadDate;
+            // inv.uploadTime = uploadTime;
+            this.axiosCall(inv);
+
+        }
+
+        
+
+
+    }
+
     render() {
         this.setState = this.setState.bind(this);
         return ( <div className='m-2' id='uplaod-docs'>
@@ -73,6 +137,7 @@ class BulkUpload extends Component {
                 stateChanger={this.setState}
                 jsonData={this.state.jsonUploadedData}
                 updateProgBar={this.updateProgBar3}
+                submitData={this.submitData}
             />}
             {this.state.uploadStep===4 && <UploadSuccess
                 stateChanger={this.setState}

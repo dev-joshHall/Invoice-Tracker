@@ -6,7 +6,8 @@ class test extends Component {
         name: '',
         note: '',
         testData: [],
-        invoiceData:[]
+        invoiceData: [],
+        invoiceObjects: [{ a: 123 }, { a: 123 }]
     }
 
     componentDidMount = () => {
@@ -44,6 +45,24 @@ class test extends Component {
             })
 
     }
+
+    testallsubmit = (event) => {
+        event.preventDefault();
+        const payload = this.state.invoiceObjects;
+
+        axios({
+            url: 'http://localhost:8080/api/BulkInvoicePost',
+            method: 'POST',
+            data: payload
+        })
+            .then(() => {
+                console.log('Success')
+            })
+            .catch(() => {
+                console.log('ERROR')
+            })
+
+    }
     //can change the name of function
     getTestData = () => {
         axios.get('http://localhost:8080/api/getinvoicedata-All')
@@ -60,17 +79,7 @@ class test extends Component {
     }
 
     displayTestData = (testDatas) => {
-        if (!testDatas.length) return null;
 
-        return testDatas.map((data, index) => (
-            <div key={index}>
-                <div> {data.description.map((data, index) => (
-                    <div key={index}>
-                        <p>{data}</p>
-                    </div>
-                ))} </div>
-            </div>
-        ));
     };
 
     render() {
@@ -79,7 +88,7 @@ class test extends Component {
         return (
             <div>
                 <h1> Welcome to the app</h1>
-                <form onSubmit={this.submit}>
+                <form onSubmit={this.testallsubmit}>
                     <div className='form-input'>
                         <input
                             type="text"
