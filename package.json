@@ -275,6 +275,7 @@
     "vm-browserify": "^1.1.2",
     "watchpack": "^1.7.5",
     "watchpack-chokidar2": "^2.0.1",
+    "web-vitals": "^3.1.1",
     "webpack": "^4.46.0",
     "webpack-sources": "^1.4.3",
     "wmf": "^1.0.2",
