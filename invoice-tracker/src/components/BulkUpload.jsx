@@ -57,22 +57,22 @@ class BulkUpload extends Component {
         $pBarEl.addClass('s4-finished');
     }
 
-    // formatAMPM = () => {
-    //     var hours = Date.getHours();
-    //     var minutes = Date.getMinutes();
-    //     var ampm = hours >= 12 ? 'pm' : 'am';
-    //     hours = hours % 12;
-    //     hours = hours ? hours : 12; // the hour '0' should be '12'
-    //     minutes = minutes < 10 ? '0'+minutes : minutes;
-    //     var strTime = hours + ':' + minutes + ' ' + ampm;
-    //     return strTime;
-    //   }
+    formatAMPM = (dt) => {
+        var hours = dt.getHours();
+        var minutes = dt.getMinutes();
+        var ampm = hours >= 12 ? 'pm' : 'am';
+        hours = hours % 12;
+        hours = hours ? hours : 12; // the hour '0' should be '12'
+        minutes = minutes < 10 ? '0'+minutes : minutes;
+        var strTime = hours + ':' + minutes + ' ' + ampm;
+        return strTime;
+      }
 
-    axiosCall = (inv) => {
+    axiosCall = (bulkData) => {
         axios({
-            url: 'http://localhost:8080/api/singleInvoicePost',
+            url: 'http://localhost:8080/api/BulkInvoicePost',
             method: 'POST',
-            data: inv
+            data: bulkData
         })
             .then(() => {
                 console.log('Success')
@@ -90,29 +90,31 @@ class BulkUpload extends Component {
         const headers = copiedData[0];
         copiedData.splice(0,1);
 
+        const currTime = Date.now();
+        const dt = new Date(currTime);
+        let uploadDate = `${dt.getMonth()+1}-${dt.getDate()}-${dt.getFullYear()} ${this.formatAMPM(dt)}`;
+
         const labeledData = []; // array of labeled invoice objects
         for (const inv of copiedData) {
             const labeledInv = {};
             for (let i = 0; i < headers.length; i++) {
-                labeledInv[headers[i]] = inv[i];
+                labeledInv[headers[i]] = inv[i].toString();
             }
+            labeledInv["uploadTime"] = uploadDate;
+            labeledInv["uploadTimeNum"] = `${currTime}`;
             labeledData.push(labeledInv);
         }
         
         // assign bulk_id
-        // bulk_id is <datetime in ms>-<random number>
-        let timeStr = `${Date.now()}-${Math.round(Math.random()*1000).toString().padStart(4, '0')}`;
-        console.log(timeStr);
-        // let uploadDate = `${Date.prototype.getMonth()}-${Date.prototype.getDate()}-${Date.prototype.getFullYear()}`;
-        // let uploadTime = this.formatAMPM();
+        // let bulkId = 
 
-        for (const inv of labeledData) {
-            inv.bulk_id = timeStr;
-            // inv.uploadDate = uploadDate;
-            // inv.uploadTime = uploadTime;
-            this.axiosCall(inv);
+        console.log(labeledData);
+        this.axiosCall(labeledData);
 
-        }
+        
+        
+
+
 
         
 

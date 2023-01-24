@@ -300,5 +300,8 @@
   "bugs": {
     "url": "https://github.com/dev-joshHall/Invoice-Tracker/issues"
   },
-  "homepage": "https://github.com/dev-joshHall/Invoice-Tracker#readme"
+  "homepage": "https://github.com/dev-joshHall/Invoice-Tracker#readme",
+  "devDependencies": {
+    "netlify-cli": "^12.9.1"
+  }
 }
