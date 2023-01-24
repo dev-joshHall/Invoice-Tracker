@@ -290,7 +290,7 @@
     "dev": "node server.js",
     "client": "cd invoice-tracker && npm start",
     "start": "concurrently -n 'server,client' -c 'red,green' \"nodemon server.js\" \"npm run client\"",
-    "build": "react-scripts build"
+    "build": "(cd invoice-tracker && react-scripts build)"
   },
   "repository": {
     "type": "git",
