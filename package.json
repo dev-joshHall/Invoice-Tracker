@@ -210,6 +210,7 @@
     "randomfill": "^1.0.4",
     "react-csv": "^2.2.2",
     "react-papaparse": "^4.1.0",
+    "react-scripts": "^5.0.1",
     "readable-stream": "^2.3.7",
     "readdirp": "^3.6.0",
     "regenerator-runtime": "^0.13.9",
@@ -288,7 +289,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "node server.js",
     "client": "cd invoice-tracker && npm start",
-    "start": "concurrently -n 'server,client' -c 'red,green' \"nodemon server.js\" \"npm run client\""
+    "start": "concurrently -n 'server,client' -c 'red,green' \"nodemon server.js\" \"npm run client\"",
+    "build": "react-scripts build"
   },
   "repository": {
     "type": "git",
