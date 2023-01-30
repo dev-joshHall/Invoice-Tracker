@@ -14,11 +14,14 @@ class BulkUpload extends Component {
         note: '',
         uploadStep: 1,
         progBarPercent: 0,
+        invoice_number: '',
+        bulk_id: '',
     }
 
     componentDidMount() {
-        // test to see value of json data in state
-        // const interval = setInterval(()=>{console.log(this.state.jsonUploadedData)}, 1000);
+        // generate IDs
+        this.getInvoiceNumber();
+        this.getBulkId();
     }
 
     updateProgBar1 = () => {
@@ -82,6 +85,38 @@ class BulkUpload extends Component {
             })
     }
 
+    getInvoiceNumber = () => {
+        axios.get('http://localhost:8080/api/getNewInvoiceNumber')
+            .then((response) => {
+                const data = response.data
+                //can change testData to mach any array you set in the state
+                console.log(data);
+                const invoiceNumber = data + 1;
+                this.setState({ invoice_number: invoiceNumber.toString() })
+                console.log("Data has been recieved")
+
+            })
+            .catch(() => {
+                console.log("error has occured")
+            })
+    }
+
+    getBulkId = () => {
+        axios.get('http://localhost:8080/api/getNewBulkId')
+            .then((response) => {
+                const data = response.data
+                //can change testData to mach any array you set in the state
+                console.log(data);
+                const bulk_id = data + 1;
+                this.setState({ bulk_id: bulk_id.toString() })
+                console.log("Data has been recieved")
+
+            })
+            .catch(() => {
+                console.log("error has occured")
+            })
+    }
+
     submitData = (event) => {
         // event.preventDefault();
 
@@ -100,13 +135,12 @@ class BulkUpload extends Component {
             for (let i = 0; i < headers.length; i++) {
                 labeledInv[headers[i]] = inv[i].toString();
             }
-            labeledInv["uploadTime"] = uploadDate;
-            labeledInv["uploadTimeNum"] = `${currTime}`;
+            labeledInv.uploadTime = uploadDate;
+            labeledInv.uploadTimeNum = `${currTime}`;
+            labeledInv.bulk_id = `${this.bulkId}`;
+            labeledInv.invoice_number = `${this.invoice_number}`
             labeledData.push(labeledInv);
         }
-        
-        // assign bulk_id
-        // let bulkId = 
 
         console.log(labeledData);
         this.axiosCall(labeledData);
