@@ -33,13 +33,12 @@ useEffect(() => {
   load()
   return () => { active = false }
 
-  async function load() {
-    setData([]) // this is optional
+  async function load() {//connecting to the database
+    setData([]) 
     const res = await axios.get("http://localhost:8080/api/getinvoicedata-All")
     .then((response) => {
         const data1 = response.data
 
-        console.log("Data has been recieved")
         console.log("pulled data")
         console.log(data1)
         
@@ -52,22 +51,20 @@ useEffect(() => {
 }, [])
 
 
-
   const checkedIds = [];
 
-  const gatherIds = () => {
-    checkedIds.push(this.state.id);
-    console.log("pushed " + this.state.id);
+  const theseIds = () => {
+    console.log("theseIds")
+    console.log(selectedFlatRows.map((row) => row.original));
+    return selectedFlatRows.map((row) => row.original)
   };
 
-  const theseIds = () => {
-    //console.log("userowselect: " + selectedFlatRows);
-  };
   console.log("new data")
   console.log(data)
+
   const {
     getTableProps, //{/*these are function that we can use for the table */}
-    getTableBodyProps,
+    getTableBodyProps, 
     headerGroups,
     page,
     nextPage,
@@ -166,8 +163,8 @@ useEffect(() => {
         </tbody>
       </table>
       <div id="paginationResultsSection">
-        <NavLink to="/view-full" id="getResultsSection">
-          <button className="getResults btn-primary m-2" onClick ={() =>ViewTableFull(selectedFlatRows)} >
+        <NavLink to="/view-full" id="getResultsSection"  >
+          <button className="getResults btn-primary m-2" ViewTable collectedIds  = {theseIds()}  >
             Get Results
           </button>
         </NavLink>
@@ -233,7 +230,11 @@ useEffect(() => {
             2
           )}
       </code>
+      <div>
+      
+      </div>
     </>
   );
 };
+
 export default ViewTable;

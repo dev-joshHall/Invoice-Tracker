@@ -1,6 +1,5 @@
 import React, {useMemo,useEffect,useState} from "react";
 import {useTable, useSortBy, useGlobalFilter, usePagination,useRowSelect} from 'react-table'
-import MOCK_DATA from './MOCK_DATA.json'
 import {COLUMNS} from './columnsFull'
 import './ViewTable.css'
 import { BsFillCaretDownFill,BsFillCaretUpFill } from "react-icons/bs";
@@ -13,9 +12,13 @@ import axios from 'axios';
 
 
 export const ViewTableFull = (props) => {
+    const collectedIds = props;
     console.log("viewtable Full")
     console.log("selectedFlatRows")
-    console.log(props.selectedFlatRows)
+    console.log(collectedIds) 
+    console.log(props.collectedIds) 
+    console.log(props)
+    console.log(props.children)
     
     const [data,setData] = useState([]);
     const columns = useMemo(() => COLUMNS, []) /*function returns COLUMNS with an empty dependency array. This is so data is not recreated on every render*/
@@ -191,7 +194,7 @@ export const ViewTableFull = (props) => {
             </select>
             <button className="exportBtn">
                 
-            <CSVLink data={csv} target='_blank' >Export CSV </CSVLink> {/*csv download link*/}
+            <CSVLink data={selectedFlatRows.map((row) => row.original)} target='_blank'  filename={"Checked-Invoices.csv"}>Export CSV </CSVLink> {/*csv download link*/}
             </button>
 
 
