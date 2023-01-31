@@ -8,17 +8,17 @@
 use('WinvoiceDB');
 
 // drop invoices collection (table)
-db.invoices.drop();
+db.invoice_record.drop();
 
 // re-created the invoices collection with new sample items
-db.invoices.insertMany([
-    {_id: 1, date: new Date("2022-10-11"), description: "shipment", items: 20, cost: 150.0, paid: true},
-    {_id: 2, date: new Date("2022-10-10"), description: "shipment", items: 10, cost: 75.0, paid: true},
-    {_id: 3, date: new Date("2022-10-09"), description: "shipment", items: 40, cost: 300.0, paid: true},
-    {_id: 4, date: new Date("2022-10-08"), description: "shipment", items: 80, cost: 600.0, paid: true}
+db.invoice_record.insertMany([
+    {_id: 1, description: "shipment", items: "20", cost: "150.0", paid: "true", bulk_id: "1"},
+    {_id: 2, description: "shipment", items: "10", cost: "75.0", paid: "true", bulk_id: "2"},
+    {_id: 3, description: "shipment", items: "40", cost: "300.0", paid: "true", bulk_id: "3"},
+    {_id: 4, description: "shipment", items: "80", cost: "600.0", paid: "true", bulk_id: "4"}
 ])
 
 // display everything in invoices
-db.invoices.find();
+db.invoice_record.find();
 
 
