@@ -22,7 +22,7 @@ export const COLUMNS = [
     },
     {
         Header: 'Bulk Id',
-        accessor: 'bulk_Id'
+        accessor: 'bulk_id'
     },
     {
         Header: 'Attributes',
