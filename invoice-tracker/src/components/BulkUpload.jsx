@@ -133,7 +133,9 @@ class BulkUpload extends Component {
         for (const inv of copiedData) {
             const labeledInv = {};
             for (let i = 0; i < headers.length; i++) {
-                labeledInv[headers[i]] = inv[i].toString();
+                if (headers[i].toLowerCase() != "bulkid" && headers[i].toLowerCase() != "bulk_id") {
+                    labeledInv[headers[i]] = inv[i].toString();
+                }
             }
             labeledInv.uploadTime = uploadDate;
             labeledInv.uploadTimeNum = `${currTime}`;
