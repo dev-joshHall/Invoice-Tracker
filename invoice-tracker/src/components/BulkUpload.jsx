@@ -6,6 +6,7 @@ import AttributeMatch from './AttributeMatch';
 import UploadOrCancel from './UploadOrCancel';
 import UploadSuccess from './UploadSuccess';
 import axios from 'axios';
+import {COLUMNS} from './columns';
 
 class BulkUpload extends Component {
 
@@ -123,6 +124,19 @@ class BulkUpload extends Component {
         // do one for every invoice
         const copiedData = [...this.state.jsonUploadedData.data];
         const headers = copiedData[0];
+        console.log(headers)
+        let modStr = (s) => {return s.toLowerCase().replace("_", "").replace(" ", "")}
+        for (let i = 0; i < headers.length; i++) {
+            let moddedVer = headers[i].toLowerCase().replace("_", "").replace(" ", "");
+            for (const col of COLUMNS) {
+                if (moddedVer.includes(modStr(col.Header)) || moddedVer.includes(modStr(col.accessor))) {
+                    headers[i] = col.accessor;
+                    break;
+                }
+            }
+        }
+        console.log(headers);
+
         copiedData.splice(0,1);
 
         const currTime = Date.now();
@@ -133,7 +147,7 @@ class BulkUpload extends Component {
         for (const inv of copiedData) {
             const labeledInv = {};
             for (let i = 0; i < headers.length; i++) {
-                if (headers[i].toLowerCase() != "bulkid" && headers[i].toLowerCase() != "bulk_id") {
+                if (headers[i].toLowerCase() != "bulkid" && headers[i].toLowerCase() != "bulk_id" && headers[i].toLowerCase() != "invoice_number" && headers[i].toLowerCase() != "invoicenumber") {
                     labeledInv[headers[i]] = inv[i].toString();
                 }
             }
@@ -146,15 +160,6 @@ class BulkUpload extends Component {
 
         console.log(labeledData);
         this.axiosCall(labeledData);
-
-        
-        
-
-
-
-        
-
-
     }
 
     render() {
