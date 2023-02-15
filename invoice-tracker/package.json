@@ -7,9 +7,13 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "axios": "^1.3.3",
     "bootstrap": "^5.2.2",
+    "cors": "^2.8.5",
     "jquery": "^3.6.1",
     "mongodb": "^4.12.1",
+    "mongoose": "^6.9.1",
+    "morgan": "^1.10.0",
     "react": "^18.2.0",
     "react-csv": "^2.2.2",
     "react-dom": "^18.2.0",
@@ -22,12 +26,13 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node server.js",
+    "client": "react-scripts start",
+    "start": "concurrently -n 'server,client' -c 'red,green' \"nodemon server.js\" \"npm run client\"",
     "build": "react-scripts build",
-    "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  
   "browserslist": {
     "production": [
       ">0.2%",
@@ -44,7 +49,7 @@
     "nodemon": "^2.0.20"
   },
   "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
-  "main": "index.js",
+  "main": "server.js",
   "keywords": [],
   "author": "",
   "license": "ISC"

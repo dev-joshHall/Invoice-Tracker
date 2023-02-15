@@ -9,7 +9,7 @@ const cors = require('cors')
 const app = express();
 const PORT = 8080;
 
-const routes = require('./routes/api')
+const routes = require('./src/routes/api')
 
 const ASHTONTEST = 'mongodb+srv://m001-student:Stuff@cluster0.dxosm2l.mongodb.net/?retryWrites=true&w=majority';
 const INVOICEDB = 'mongodb+srv://WinvoiceDB:Winvoice4TheWin@cluster0.erdkqut.mongodb.net/?retryWrites=true&w=majority'
