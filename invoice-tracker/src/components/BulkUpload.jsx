@@ -127,7 +127,7 @@ class BulkUpload extends Component {
         console.log(headers)
         let modStr = (s) => {return s.toLowerCase().replace("_", "").replace(" ", "")}
         for (let i = 0; i < headers.length; i++) {
-            let moddedVer = headers[i].toLowerCase().replace("_", "").replace(" ", "");
+            let moddedVer = modStr(headers[i]);
             for (const col of COLUMNS) {
                 if (moddedVer.includes(modStr(col.Header)) || moddedVer.includes(modStr(col.accessor))) {
                     headers[i] = col.accessor;

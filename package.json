@@ -296,7 +296,9 @@
     "dev": "node server.js",
     "client": "cd invoice-tracker && npm start",
     "start": "concurrently -n 'server,client' -c 'red,green' \"nodemon server.js\" \"npm run client\"",
-    "build": "(cd invoice-tracker && react-scripts build)"
+    "build": "(cd invoice-tracker && react-scripts build)",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "repository": {
     "type": "git",
@@ -308,8 +310,9 @@
   "bugs": {
     "url": "https://github.com/dev-joshHall/Invoice-Tracker/issues"
   },
-  "homepage": "https://github.com/dev-joshHall/Invoice-Tracker#readme",
+  "homepage": "https://dev-joshHall.github.io/Invoice-Tracker",
   "devDependencies": {
+    "gh-pages": "^5.0.0",
     "netlify-cli": "^12.9.1"
   }
 }
