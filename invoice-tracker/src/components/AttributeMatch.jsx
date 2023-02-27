@@ -15,8 +15,9 @@ import React, { Component } from 'react';
             <h2 className='d-flex justify-content-center'>Attribute Match</h2>
             
             {this.props.jsonData.data[0].map((x)=>{
+                let y = this.props.headers[counter];
                 counter++;
-                return <span  className='d-flex justify-content-left' key={counter}>Field name: {x}<br/></span> 
+                return x !== "" ? <span  className='d-flex justify-content-center' key={counter}>{x} &#8594; {y}<br/></span> : <span></span>
             })}
             <button id='step2NextBtn' className='btn btn-primary m-2' onClick={this.onConfirmPressed}>Confirm</button>
         </div>);

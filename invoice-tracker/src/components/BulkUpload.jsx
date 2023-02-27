@@ -17,6 +17,7 @@ class BulkUpload extends Component {
         progBarPercent: 0,
         invoiceNumber: '',
         bulk_id: '',
+        headers: [],
     }
 
     componentDidMount() {
@@ -33,6 +34,22 @@ class BulkUpload extends Component {
             $pBarEl.removeClass('step1');
             $pBarEl.addClass('s1-finished');
         }, 1000);
+
+        // attribute match
+        const copiedData = [...this.state.jsonUploadedData.data];
+        const headers = copiedData[0];
+        console.log(headers)
+        let modStr = (s) => {return s.toLowerCase().replace("_", "").replace(" ", "")}
+        for (let i = 0; i < headers.length; i++) {
+            let moddedVer = modStr(headers[i]);
+            for (const col of COLUMNS) {
+                if (moddedVer.includes(modStr(col.Header)) || moddedVer.includes(modStr(col.accessor))) {
+                    headers[i] = col.accessor;
+                    break;
+                }
+            }
+        }
+        this.setState({headers});
     }
 
     updateProgBar2 = () => {
@@ -121,30 +138,15 @@ class BulkUpload extends Component {
 
     submitData = (event) => {
         // event.preventDefault();
-
-        // do one for every invoice
         const copiedData = [...this.state.jsonUploadedData.data];
-        const headers = copiedData[0];
-        console.log(headers)
-        let modStr = (s) => {return s.toLowerCase().replace("_", "").replace(" ", "")}
-        for (let i = 0; i < headers.length; i++) {
-            let moddedVer = modStr(headers[i]);
-            for (const col of COLUMNS) {
-                if (moddedVer.includes(modStr(col.Header)) || moddedVer.includes(modStr(col.accessor))) {
-                    headers[i] = col.accessor;
-                    break;
-                }
-            }
-        }
-        console.log(headers);
-
-        copiedData.splice(0,1);
+        copiedData.splice(0,1); // remove headers from copied data
 
         const currTime = Date.now();
         const dt = new Date(currTime);
         let uploadDate = `${dt.getMonth()+1}-${dt.getDate()}-${dt.getFullYear()} ${this.formatAMPM(dt)}`;
 
         const labeledData = []; // array of labeled invoice objects
+        const headers = [...this.state.headers];
         for (const inv of copiedData) {
             const labeledInv = {};
             for (let i = 0; i < headers.length; i++) {
@@ -159,8 +161,8 @@ class BulkUpload extends Component {
             labeledData.push(labeledInv);
         }
 
-        console.log(labeledData);
-        this.axiosCall(labeledData);
+        console.log(this.state.labeledData);
+        this.axiosCall(this.state.labeledData);
     }
 
     render() {
@@ -176,6 +178,7 @@ class BulkUpload extends Component {
                 stateChanger={this.setState}
                 jsonData={this.state.jsonUploadedData}
                 updateProgBar={this.updateProgBar2}
+                headers={this.state.headers}
             />}
             {this.state.uploadStep===3 && <UploadOrCancel
                 stateChanger={this.setState}
