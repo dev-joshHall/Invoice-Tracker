@@ -2,7 +2,10 @@
 // To run this in VS code, download the extention "MongoDB for VS Code" by MongoDB
 // The extention "Mongo Snippets for Node-js" by Rohan Mukherjee is also helpful
 // You can also modify this database by downloading the mongosh shell from "https://www.mongodb.com/docs/mongodb-shell/install/#std-label-mdb-shell-install"
-// You can view this database 
+// You can view this database
+
+// connection string (minus password):
+// mongodb+srv://WinvoiceDB:<password>@cluster0.erdkqut.mongodb.net/test
 
 // select the database to use.
 use('WinvoiceDB');

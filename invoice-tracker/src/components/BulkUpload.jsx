@@ -15,7 +15,7 @@ class BulkUpload extends Component {
         note: '',
         uploadStep: 1,
         progBarPercent: 0,
-        invoice_number: '',
+        invoiceNumber: '',
         bulk_id: '',
     }
 
@@ -90,11 +90,13 @@ class BulkUpload extends Component {
         axios.get('http://localhost:8080/api/getNewInvoiceNumber')
             .then((response) => {
                 const data = response.data
+                console.log([data])
                 //can change testData to mach any array you set in the state
-                console.log(data);
-                const invoiceNumber = data + 1;
-                this.setState({ invoice_number: invoiceNumber.toString() })
-                console.log("Data has been recieved")
+                console.log("invoice #: "+typeof(data));
+                const invoiceNumber = (parseInt(data) + 1).toString().padStart(8, '0');
+                console.log(`inv #: ${invoiceNumber}`);
+                this.setState({ invoiceNumber: invoiceNumber });
+                console.log("Invoice number has been recieved");
 
             })
             .catch(() => {
@@ -107,9 +109,8 @@ class BulkUpload extends Component {
             .then((response) => {
                 const data = response.data
                 //can change testData to mach any array you set in the state
-                console.log(data);
-                const bulk_id = data + 1;
-                this.setState({ bulk_id: bulk_id.toString() })
+                const bulk_id = (parseInt(data) + 1).toString().padStart(8, '0');
+                this.setState({ bulk_id: bulk_id })
                 console.log("Data has been recieved")
 
             })
@@ -153,8 +154,8 @@ class BulkUpload extends Component {
             }
             labeledInv.uploadTime = uploadDate;
             labeledInv.uploadTimeNum = `${currTime}`;
-            labeledInv.bulk_id = `${this.bulkId}`;
-            labeledInv.invoice_number = `${this.invoice_number}`
+            labeledInv.bulk_id = `${this.state.bulk_id}`;
+            labeledInv.invoiceNumber = `${this.state.invoiceNumber}`
             labeledData.push(labeledInv);
         }
 

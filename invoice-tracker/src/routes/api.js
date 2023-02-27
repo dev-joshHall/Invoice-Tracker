@@ -14,7 +14,7 @@ router.get('/api/getinvoicedata-All', (req, res) => {
             //await createInvoice(client, data);
             const data = await findOneListingByName(client, "");
             res.json(data);
-            console.log(data)
+            // console.log(data)
 
         } catch (e) {
             console.error(e)
@@ -110,9 +110,10 @@ router.get('/api/getNewInvoiceNumber', (req, res) => {
     }
 
     async function getNewInvoiceNumber(client, nameOfListing) {
-        const object = await client.db("WinvoiceDB").collection("invoice_record").find().sort({ invoice_number: -1 }).limit(1).toArray();
-        const result = object[0].invoice_number
+        const object = await client.db("WinvoiceDB").collection("invoice_record").find().sort({ invoiceNumber: -1 }).limit(1).toArray();
+        const result = object[0].invoiceNumber
         if (result) {
+            console.log(`found the inv record # ${result}`)
             return result;
         } else {
             console.log('No listings found')
