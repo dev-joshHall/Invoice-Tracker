@@ -30,7 +30,7 @@
     "dev": "node server.js",
     "client": "react-scripts start",
     "start": "concurrently -n 'server,client' -c 'red,green' \"nodemon server.js\" \"npm run client\"",
-    "build": "react-scripts build",
+    "build": "npm install && react-scripts build",
     "eject": "react-scripts eject"
   },
   "browserslist": {
@@ -45,6 +45,7 @@
       "last 1 safari version"
     ]
   },
+  "proxy": "http://localhost:8080",
   "devDependencies": {
     "nodemon": "^2.0.20"
   },
