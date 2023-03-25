@@ -1,13 +1,12 @@
 import React, {useMemo,useEffect,useState} from "react";
 import {useTable, useSortBy, useGlobalFilter, usePagination,useRowSelect} from 'react-table'
-import {COLUMNS} from './columnsFull'
+import {COLUMNSFULL} from './columnsFull'
 import './ViewTable.css'
 import { BsFillCaretDownFill,BsFillCaretUpFill } from "react-icons/bs";
 import { ViewTableSearch } from "./ViewTableSearch";
 import { CheckmarkBox } from "./CheckmarkBox";
 import {NavLink} from './NavbarElements';
 import {CSVDownload, CSVLink} from 'react-csv';
-import TablePull from "./table-pull";
 import axios from 'axios';
 
 

@@ -1,5 +1,5 @@
 /* Setting up and mapping the columns in the table from the table for all data*/
-export const COLUMNS = [
+export const COLUMNSFULL = [
     {
         Header: 'Invoice Number',
         accessor: 'invoiceNumber'
