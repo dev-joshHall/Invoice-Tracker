@@ -14,13 +14,15 @@ class ChooseFileUpload extends Component {
     }
 
     render() {
-        return ( <div className='border rounded d-flex flex-column bd-highlight mb-3'>
-            <span className='d-flex justify-content-center'>Step 1 - Choose File</span>
-            <span className='d-flex justify-content-center'>Upload File (CSV)</span>
-            <div className='m-3'>
-                <CSVReader stateChanger={this.props.stateChanger} uploadState={this.props.uploadState}/>
+        return ( <div className='border rounded m-3'>
+            <div className='m-2 d-flex flex-column justify-content-center bd-highlight border-3 m-5'>
+                <h2 className='d-flex justify-content-center'>Step 1 - Choose File</h2>
+                <span className='d-flex justify-content-center'>Upload File (CSV)</span>
+                <div className='m-3 w-50 mx-auto'>
+                    <CSVReader stateChanger={this.props.stateChanger} uploadState={this.props.uploadState}/>
+                </div>
+                <button id='step1NextBtn' className='btn btn-primary m-2 w-25 mx-auto' disabled={true}>Next</button>
             </div>
-            <button id='step1NextBtn' className='btn btn-primary m-2' disabled={true}>Next</button>
         </div> );
     }
     

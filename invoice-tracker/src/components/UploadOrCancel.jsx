@@ -18,8 +18,8 @@ class UploadOrCancel extends Component {
         return (<div className='border rounded d-flex flex-column bd-highlight mb-3'>
             <h2 className='d-flex justify-content-center'>Are you sure?</h2>
             <span className='d-flex justify-content-center'>You cannot undo this action</span>
-            <button id='step3NextBtn' className='btn btn-primary m-2' onClick={this.onUploadPressed}>Upload</button>
-            <button id='step3CancelBtn' className='btn btn-primary m-2' onClick={this.onCancelPressed}>Back</button>
+            <button id='step3NextBtn' className='btn btn-primary m-2 w-25 mx-auto' onClick={this.onUploadPressed}>Upload</button>
+            <button id='step3CancelBtn' className='btn btn-primary m-2 w-25 mx-auto' onClick={this.onCancelPressed}>Back</button>
         </div>);
     }
 }
