@@ -6,6 +6,7 @@ import {
   useGlobalFilter,
   usePagination,
   useRowSelect,
+  useFilters
 } from "react-table";
 import { COLUMNS } from "./columns";
 import{COLUMNSFULL} from "./columnsFull"
@@ -86,6 +87,7 @@ useEffect(() => {
       columns: columnState,
       data: data,
     },
+    useFilters,
     useGlobalFilter /*enabling search*/,
     useSortBy /*enabling sort*/,
     usePagination /*setting up pages*/,
@@ -144,10 +146,25 @@ useEffect(() => {
     //eendDate: null
   })
   ///////////////////////////////////////////////
-  console.log("page",page)
-  const startDate = props.startDate;
-  console.log("startDateView " , startDate);
-  const dates=Date();
+  //console.log("page",page)
+  //const startDate = props.startDate;
+  //console.log("startDateView " , startDate);
+  //const dates=Date();
+   ///////////////////////////////////////////////////////
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
+
+  const filteredData = data.filter((item) => {
+    if (startDate && endDate) {
+      return item.date >= startDate && item.date <= endDate;
+    } else if (startDate) {
+      return item.date >= startDate;
+    } else if (endDate) {
+      return item.date <= endDate;
+    }
+    return true;
+  });
+   ///////////////////////////////////////////////////////
    return (
     <>
       {/*Search icon */}
@@ -169,6 +186,7 @@ useEffect(() => {
               {headerGroup.headers.map((columnState) => (
                 <th {...columnState.getHeaderProps(columnState.getSortByToggleProps())}>
                   {columnState.render("Header")}
+                  <div>{columnState.canFilter ? columnState.render('Filter') : null}</div>
                   <span>
                     {columnState.isSorted ? (
                       columnState.isSortedDesc ? (
