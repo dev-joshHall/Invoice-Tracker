@@ -13,16 +13,21 @@ import "./ViewTable.css";
 import { BsFillCaretDownFill, BsFillCaretUpFill } from "react-icons/bs";
 import { ViewTableSearch } from "./ViewTableSearch";
 import { CheckmarkBox } from "./CheckmarkBox";
-import { NavLink } from "./NavbarElements";
 import axios from 'axios';
-import ViewTableFull from "./ViewTableFull";
-import ReactDOM from "react-dom/client";
 import { ViewTableDates } from "./ViewTableDateFilter";
-import {CSVDownload, CSVLink} from 'react-csv';
+import { CSVLink} from 'react-csv';
 
 export const ViewTable = (props) => {
 
   let [data,setData] = useState([]);
+
+  /*const [finalDate,setFinalDate] = useState(null);
+  const [eendDate,SSetEndDate] = useState(null);
+  
+  const handleDateChange=({sstartDate,eendDate})=>{
+    SSetStartDate (sstartDate);
+    SSetEndDate(eendDate);
+  };*/
 
   const [filterClick,SetFilterClick] = useState(false);//if get results have been clicked or not
 
@@ -135,11 +140,14 @@ useEffect(() => {
  }
  ///////////////////////////////////////////////////////
   const [dateFilter, setDateFilter] = useState({
-    startDate: null,
-    endDate: null
+
+    //eendDate: null
   })
   ///////////////////////////////////////////////
   console.log("page",page)
+  const startDate = props.startDate;
+  console.log("startDateView " , startDate);
+  const dates=Date();
    return (
     <>
       {/*Search icon */}
@@ -149,13 +157,7 @@ useEffect(() => {
         className="search"
         high
       />
-      <ViewTableDates
-        filter={globalFilter}
-        setFilter={setGlobalFilter}
-        className="search"
-        high
-      />
-
+      <ViewTableDates/>
       
       {/*creating table with html this is the format to use with the above functions and arrays*/}
       <table {...getTableProps()} id="#view-docs">
@@ -217,7 +219,7 @@ useEffect(() => {
           {
             filterClick ? 
             <button onClick={handleBackClick}>
-              Back
+              Go Back
             </button>:
           <button className="getResults btn-primary m-2" onClick={() => UpdateTable()}  >
             Get Results
@@ -280,7 +282,7 @@ useEffect(() => {
                 
           <CSVLink data={selectedFlatRows.map((row) => row.original)} target='_blank'  filename={"Checked-Invoices.csv"}>Export CSV </CSVLink> {/*csv download link*/}
           </button>:
-          <button>hello</button>
+          <div></div>
 
           }
 

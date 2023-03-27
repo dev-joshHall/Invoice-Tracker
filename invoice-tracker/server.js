@@ -23,6 +23,8 @@ mongoose.connection.on('connected', () => {
     console.log("Mongo DB Connected");
 });
 
+// Have Node serve the files for our built React app
+app.use(express.static(path.resolve(__dirname, '../build')));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }))
@@ -70,6 +72,10 @@ app.use(cors());
 app.use(morgan('tiny'));
 app.use('/', routes)
 
+// All other GET requests not handled before will return our React app
+app.get('/*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'build', 'index.html'));
+});
 
 //listen ports
 app.listen(PORT, console.log(`server is starting at ${PORT}`))
