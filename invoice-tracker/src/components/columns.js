@@ -1,31 +1,45 @@
+
 /* Setting up and mapping the columns in the table from the table*/
 export const COLUMNS = [
     {
         Header: 'Invoice Number',
-        accessor: 'invoiceNumber'
+        accessor: 'invoiceNumber',
+    
+        disableFilters: true
     },
     {
         Header: 'Company Name',
-        accessor: 'companyName'
+        accessor: 'companyName',
+
+        disableFilters: true
     },
     {
         Header: 'Total',
-        accessor: 'total'
+        accessor: 'total',
+
+        disableFilters: true
     },
     {
         Header: 'Billed Date',
-        accessor: 'billedDate'
+        accessor: 'billedDate',
+        disableFilters: true
     },
     {
         Header: 'Status',
-        accessor: 'status'
+        accessor: 'status',
+
+        disableFilters: true
     },
     {
         Header: 'Bulk Id',
-        accessor: 'bulk_id'
+        accessor: 'bulk_id',
+
+        disableFilters: true
     },
     {
         Header: 'Attributes',
-        accessor: 'attributes'
+        accessor: 'attributes',
+
+        disableFilters: true
     }
 ]

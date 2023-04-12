@@ -11,7 +11,6 @@ import UploadMainPage from './components/UploadMainPage';
 import BulkUpload from './components/BulkUpload';
 import Test from './components/test';
 import CreateRecord from './components/CreateRecord'
-import ViewTableFull from './components/ViewTableFull';
 
 
 class App extends Component {
@@ -27,7 +26,7 @@ class App extends Component {
           <Route path='/upload/:upload-docs' element={<BulkUpload />} />
           <Route path='/test' element={<Test />} />
           <Route path='/CreateRecord' element={<CreateRecord />} />
-          <Route path='/view-full'collectedIds element={<ViewTableFull />} />
+
         </Routes>
       </Router>
 

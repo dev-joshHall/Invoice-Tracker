@@ -5,10 +5,14 @@ import 'react-datepicker/dist/react-datepicker.css';
 import ViewTable from './ViewTable';
 
 
-export const ViewTableDates = ({ props }) =>{
-    const [startDate, setStartDate] = useState(undefined);
-    const [endDate, setEndDate] = useState(undefined);
-  
+export const ViewTableDates = ( props ) =>{
+    //const [startDate, setStartDate] = useState(null);
+    //const [endDate, setEndDate] = useState(null);
+    const startDate = props.startDate;
+    const endDate = props.endDate;
+    const setStartDate =props.setStartDate;
+    const setEndDate = props.setEndDate;
+
     const handleStartDateChange = (date) => {
       setStartDate(date);
       //onChange({ startDate: date, endDate: endDate });
@@ -28,8 +32,10 @@ export const ViewTableDates = ({ props }) =>{
 <div>
     <label>Start Date:</label>
       <DatePicker
+
         selected={startDate}
         date = {startDate}
+        dateFormat='yyyy-MM-dd'
         onChange={handleStartDateChange}
         selectsStart
         startDate={startDate}
@@ -38,14 +44,17 @@ export const ViewTableDates = ({ props }) =>{
       />
       <label>End Date:</label>
       <DatePicker
+
         selected={endDate}
         date = {endDate}
+        dateFormat='yyyy-MM-dd'
         onChange={handleEndDateChange}
         selectsEnd
         startDate={startDate}
         endDate={endDate}
         minDate={startDate}
         placeholderText="End Date"
+
       />
 
     </div>
