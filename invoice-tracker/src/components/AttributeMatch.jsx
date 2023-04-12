@@ -14,7 +14,7 @@ import React, { Component } from 'react';
         return (<div className='border rounded d-flex flex-column bd-highlight mb-3'>
             <h2 className='d-flex justify-content-center'>Attribute Match</h2>
             <div className='overflow-auto' style={{height: 380}}>
-                {this.props.jsonData.data[0].map((x)=>{
+                {this.props.jsonData.data[0] && this.props.jsonData.data[0].map((x)=>{
                     let y = this.props.headers[counter];
                     counter++;
                     return x !== "" ? <span  className='d-flex justify-content-center' key={counter}>{x} &#8594; {y}<br/></span> : <span></span>

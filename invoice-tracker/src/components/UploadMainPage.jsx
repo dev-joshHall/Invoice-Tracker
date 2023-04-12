@@ -30,21 +30,13 @@ function UploadMainPage() {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                    <th scope="row">00000001</th>
-                    <td>12/28/22</td>
-                    <td>0</td>
-                    </tr>
-                    <tr>
-                    <th scope="row">00000002</th>
-                    <td>3/14/23</td>
-                    <td>0</td>
-                    </tr>
-                    <tr>
-                    <th scope="row">00000003</th>
-                    <td>3/20/23</td>
-                    <td>2</td>
-                    </tr>
+                    {[1,2,3,4,5,6,7,8,9].map((x)=>{
+                        return <tr>
+                        <td scope="row">{x.toString().padStart(8, "0")}</td>
+                        <td>12/{x.toString()}/22</td>
+                        <td>0</td>
+                        </tr>
+                    })}
                 </tbody>
             </table>
         </div>
