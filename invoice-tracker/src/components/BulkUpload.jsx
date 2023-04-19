@@ -159,10 +159,12 @@ class BulkUpload extends Component {
             labeledInv.bulk_id = `${this.state.bulk_id}`;
             labeledInv.invoiceNumber = `${this.state.invoiceNumber}`
             labeledData.push(labeledInv);
+            console.log(labeledInv);
         }
-
-        console.log(this.state.labeledData);
-        this.axiosCall(this.state.labeledData);
+        console.log(labeledData)
+        this.setState({labeledData});
+        
+        this.axiosCall(labeledData);
     }
 
     render() {

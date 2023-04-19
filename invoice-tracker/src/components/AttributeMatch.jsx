@@ -17,7 +17,7 @@ import React, { Component } from 'react';
                 {this.props.jsonData.data[0] && this.props.jsonData.data[0].map((x)=>{
                     let y = this.props.headers[counter];
                     counter++;
-                    return x !== "" ? <span  className='d-flex justify-content-center' key={counter}>{x} &#8594; {y}<br/></span> : <span></span>
+                    return x !== "" ? <span key={counter} className='d-flex justify-content-center'>{x} &#8594; {y}<br/></span> : <span key={counter}></span>
                 })}
             </div>
             <button id='step2NextBtn' className='btn btn-primary m-2 w-25 mx-auto' onClick={this.onConfirmPressed}>Confirm</button>
