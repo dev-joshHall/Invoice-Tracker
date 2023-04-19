@@ -1,87 +1,136 @@
+
+
 /* Setting up and mapping the columns in the table from the table for all data*/
+
+
+
 export const COLUMNSFULL = [
     {
         Header: 'Invoice Number',
-        accessor: 'invoiceNumber'
+        accessor: 'invoiceNumber',
+        name :"invoiceNumber",
+
+        disableFilters: true
     },
     {
         Header: 'Product',
-        accessor: 'product'
+        accessor: 'product',
+        name: "product",
+
+        disableFilters: true
     },
     {
         Header: 'Description',
-        accessor: 'description'
+        accessor: 'description',
+
+        disableFilters: true
     },
     {
         Header: 'Ordered Quantity',
-        accessor: 'orderedQuantity'
+        accessor: 'orderedQuantity',
+
+        disableFilters: true
     },
     {
         Header: 'Unit Of Measure',
-        accessor: 'unitOfMeasure'
+        accessor: 'unitOfMeasure',
+
+        disableFilters: true
     },
     {
         Header: 'Unit Price',
-        accessor: 'unitPrice'
+        accessor: 'unitPrice',
+
+        disableFilters: true
     },
     {
         Header: 'Total',
-        accessor: 'total'
+        accessor: 'total',
+
+        disableFilters: true
     },
     {
         Header: 'Taxes',
-        accessor: 'taxes'
+        accessor: 'taxes',
+
+        disableFilters: true
     },
     {
         Header: 'Status',
-        accessor: 'status'
+        accessor: 'status',
+  
+        disableFilters: true
     },
     {
         Header: 'Bulk Id',
-        accessor: 'bulkId'
+        accessor: 'bulkId',
+
+        disableFilters: true
     },
     {
         Header: 'Attributes',
-        accessor: 'attributes'
+        accessor: 'attributes',
+
+        disableFilters: true
     },
     {
         Header: 'Company Name',
-        accessor: 'companyName'
+        accessor: 'companyName',
+
+        disableFilters: true
     },
     {
         Header: 'Billed Date',
-        accessor: 'billedDate'
+        accessor: 'billedDate',
+
+        disableFilters: true
     },
     {
         Header: 'Phone Number',
-        accessor: 'phoneNumber'
+        accessor: 'phoneNumber',
+
+        disableFilters: true
     },
     {
         Header: 'Email',
-        accessor: 'email'
+        accessor: 'email',
+
+        disableFilters: true
     },
     {
         Header: 'Street Address',
-        accessor: 'streetAddress'
+        accessor: 'streetAddress',
+
+        disableFilters: true
     },
     {
         Header: 'Street Address 2',
-        accessor: 'address 2'
+        accessor: 'address 2',
+  
+        disableFilters: true
     },
     {
         Header: 'Zip',
-        accessor: 'zip'
+        accessor: 'zip',
+
+        disableFilters: true
     },
     {
         Header: 'City',
-        accessor: 'city'
+        accessor: 'city',
+
+        disableFilters: true
     },
     {
         Header: 'State',
-        accessor: 'state'
+        accessor: 'state',
+
+        disableFilters: true
     },
     {
         Header: 'Country',
-        accessor: 'country'
+        accessor: 'country',
+
+        disableFilters: true
     }
 ]

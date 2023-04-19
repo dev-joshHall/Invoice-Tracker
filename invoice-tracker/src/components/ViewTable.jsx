@@ -1,11 +1,12 @@
 
-import React, { useMemo, useState,useEffect } from "react";
+import React, { useMemo, useState,useEffect,Fragment } from "react";
 import {
   useTable,
   useSortBy,
   useGlobalFilter,
   usePagination,
   useRowSelect,
+  useFilters
 } from "react-table";
 import { COLUMNS } from "./columns";
 import{COLUMNSFULL} from "./columnsFull"
@@ -17,19 +18,18 @@ import axios from 'axios';
 import { ViewTableDates } from "./ViewTableDateFilter";
 import { CSVLink} from 'react-csv';
 
+
+
 export const ViewTable = (props) => {
 
   let [data,setData] = useState([]);
 
-  /*const [finalDate,setFinalDate] = useState(null);
-  const [eendDate,SSetEndDate] = useState(null);
-  
-  const handleDateChange=({sstartDate,eendDate})=>{
-    SSetStartDate (sstartDate);
-    SSetEndDate(eendDate);
-  };*/
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
+
 
   const [filterClick,SetFilterClick] = useState(false);//if get results have been clicked or not
+
 
   const columns = useMemo(
     () => COLUMNS,
@@ -53,7 +53,7 @@ useEffect(() => {
     const res = await axios.get("http://localhost:8080/api/getinvoicedata-All")
     .then((response) => {
         let data1 = response.data
-        console.log("pulled data")
+       
         
         return data1;
     })
@@ -113,9 +113,11 @@ useEffect(() => {
     state; /*getting a state of the table**/
   
   const UpdateTable = ()=>{// updating current table with whats selected. 
+    console.log("data",data);
     setColumnState(columnsFull);
     data = selectedFlatRows.map((row) => row.original);
     setData(data)
+    console.log("data",data);
     SetFilterClick(true);
  }
 
@@ -127,7 +129,7 @@ useEffect(() => {
     const res = await axios.get("http://localhost:8080/api/getinvoicedata-All")
     .then((response) => {
         let data1 = response.data
-        console.log("pulled data")
+       
         
         return data1;
     })
@@ -138,15 +140,40 @@ useEffect(() => {
   setColumnState(columns);
   page = load();
  }
- ///////////////////////////////////////////////////////
-  const [dateFilter, setDateFilter] = useState({
 
-    //eendDate: null
-  })
-  ///////////////////////////////////////////////
-  console.log("page",page)
-  const startDate = props.startDate;
-  console.log("startDateView " , startDate);
+  function filterByDate(row){
+
+    console.log("end",endDate);
+    if (!endDate || !startDate){
+      return true;
+    }
+    let invoiceDate= JSON.stringify(row.values.billedDate)
+    // console.log("row",row)
+    // console.log("SelectedEndDate", new Date(endDate).getTime());
+    // console.log("invoiceDate", new Date(invoiceDate).getTime());
+    // console.log("test", (new Date(invoiceDate).getTime()) <= (new Date(endDate).getTime()))
+    return  (new Date(invoiceDate).getTime()) <= (new Date(endDate).getTime()) && (new Date(invoiceDate).getTime()) >= (new Date(startDate).getTime());
+ 
+  }
+  function editRow(row){
+
+    console.log("Editing row: ",row);
+    let newData = data.filter(dataRow=> dataRow.invoiceNumber != row.values.invoiceNumber);
+    //update the row (popup window change inputs, then a call)
+    newData.push(row);
+    setData(newData);
+  }
+  function deleteRow(row){
+    console.log("Deleting row: ",row);
+    let newData = data.filter(dataRow=> dataRow.invoiceNumber != row.values.invoiceNumber);
+    setData(newData);
+
+  }
+  function refreshDates(){
+    setStartDate(null);
+    setEndDate(null);
+  }
+  
   const dates=Date();
    return (
     <>
@@ -157,8 +184,10 @@ useEffect(() => {
         className="search"
         high
       />
-      <ViewTableDates/>
-      
+      <ViewTableDates startDate={startDate}endDate={endDate}setStartDate={setStartDate}setEndDate={setEndDate}/>
+      <button onClick={()=>refreshDates()}>
+        Refresh
+      </button>
       {/*creating table with html this is the format to use with the above functions and arrays*/}
       <table {...getTableProps()} id="#view-docs">
         <thead>
@@ -183,6 +212,13 @@ useEffect(() => {
                   </span>
                 </th>
               ))}
+              {filterClick ? 
+                  <th>
+                      Actions
+                  </th>:
+                   <>
+                   </>
+                }
             </tr>
           ))}
         </thead>
@@ -192,18 +228,36 @@ useEffect(() => {
               prepareRow(row);
               return (
                 <tr {...row.getRowProps()}>
-                  {row.cells.map((cell) => {
+
+                  {row.cells.map((cell,index) => {
+
                     return (
-                      <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+                      <td  {...cell.getCellProps()}>{cell.render("Cell")}</td>
+                      
                     );
                   })}
+                  <td className="Actions">
+                  <button onClick={()=>editRow(row)}>
+                          Edit 
+                  </button>
+                  <button onClick={()=>deleteRow(row)}>
+                          Delete 
+                  </button>
+
+                  </td>
+
                 </tr>
               );
             }):
           page.map((row) => {
+
             prepareRow(row);
+            if (!filterByDate(row)){
+              console.log("row",row)
+              return <></>;
+            }
             return (
-              <tr {...row.getRowProps()}>
+              <tr key ={row.id}{...row.getRowProps()}>
                 {row.cells.map((cell) => {
                   return (
                     <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
