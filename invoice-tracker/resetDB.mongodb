@@ -35,7 +35,7 @@ db.invoice_record.insertMany([
     {_id: 18, companyName: 'Salt Lake Distribution', invoiceNumber: '00000018',bulk_id: '00000008',status: 'PAID',paid_date: '2023/01/05',billedDate: '2022/11/13',notes: 'office expenditure',taxes: '12.01',order_total: '500.45',product: 'speakers',description: 'bluetooth speaker',quantityr: '29',unit: 'Boxes',unit_price: '150.00',total: '4350',first_name: 'Beatrice',last_name: 'Shoven',phone_number: '124-524-4455',email: 'pattyp@gmail.com',street_address: '3020 E 3929 N',address_2: '',zip: '08601',city: 'Trenton',state: 'NJ',country: 'USA'},
     {_id: 19, companyName: 'Salt Lake Distribution', invoiceNumber: '00000019',bulk_id: '00000009',status: 'NEGOTIATE',paid_date: '2023/01/06',billedDate: '',notes: 'office suplies',taxes: '4.65',order_total: '90.22',product: 'stapler',description: 'paper mate brand',quantityr: '30',unit: 'Boxes',unit_price: '10.00',total: '300',first_name: 'Harry',last_name: 'Allred',phone_number: '377-854-8565',email: 'vikkijesop@gmail.com',street_address: '483  W 400 S',address_2: '',zip: '23324',city: 'Norfolk',state: 'VA',country: 'USA'},
     {_id: 20, companyName: 'Salt Lake Distribution', invoiceNumber: '00000020',bulk_id: '00000009',status: 'PAID',paid_date: '2023/01/06',billedDate: '2023/01/05',notes: 'Office supplies',taxes: '.05',order_total: '5.05',product: 'paper clips',description: 'bulk pack',quantityr: '31',unit: 'Boxes',unit_price: '20.00',total: '620',first_name: 'Luna',last_name: 'Lopez',phone_number: '785-666-5215',email: 'camilleksws@me.com',street_address: '9483 Water St Apt 394',address_2: '',zip: '23324',city: 'Norfolk',state: 'VA',country: 'USA'},
-])
+]);
 
 // display everything in invoices
 db.invoice_record.find();

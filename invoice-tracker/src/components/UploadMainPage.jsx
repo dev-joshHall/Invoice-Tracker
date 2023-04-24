@@ -1,14 +1,17 @@
 import React, { Component } from 'react';
 import { NavLink } from './NavbarElements';
 import axios from 'axios';
+import SingleUploadView from './SingleUploadView';
 
 class UploadMainPage extends Component {
 
     state = {
-        bulkData: {}
+        bulkData: {},
+        selectedBulkUpload: null
     }
 
     async componentDidMount() {
+        this.setState({selectedBulkUpload: null});
         const res = await axios.get("http://localhost:8080/api/getinvoicedata-All")
           .then((response) => {
               const data1 = response.data
@@ -31,6 +34,10 @@ class UploadMainPage extends Component {
         this.setState({bulkData});
     }
 
+    selectInvoice(bulkUpload) {
+        this.setState({selectedBulkUpload: bulkUpload})
+    }
+
     render() {
         return (<div id='upload-page' className="d-flex flex-column bd-highlight mb-3 container">
             <div className='row d-flex justify-content-center container m-3'>
@@ -50,7 +57,8 @@ class UploadMainPage extends Component {
                 </div>
 
             </div>
-            <div className='d-flex justify-content-center row'>
+            
+            {!this.state.selectedBulkUpload && <div className='d-flex justify-content-center row'>
                 <table className="table table-dark table-striped">
                     <thead>
                         <tr>
@@ -61,7 +69,7 @@ class UploadMainPage extends Component {
                     </thead>
                     <tbody>
                         {Object.values(this.state.bulkData).map((x)=>{
-                            return <tr key={parseInt(x[0].bulk_id)}>
+                            return <tr key={parseInt(x[0].bulk_id)} onClick={()=>{this.selectInvoice(x)}}>
                             <td scope="row">{x[0].bulk_id}</td>
                             <td>{x[0].paid_date}</td>
                             <td>{x.length}</td>
@@ -69,7 +77,8 @@ class UploadMainPage extends Component {
                         })}
                     </tbody>
                 </table>
-            </div>
+            </div>}
+            {this.state.selectedBulkUpload && <SingleUploadView invoices={this.state.selectedBulkUpload} bulkId={this.state.selectedBulkUpload.length > 0 ? this.state.selectedBulkUpload[0].bulk_id : "No ID"}/>}
         </div>);
     }
     

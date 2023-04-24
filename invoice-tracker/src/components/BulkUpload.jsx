@@ -15,7 +15,7 @@ class BulkUpload extends Component {
         note: '',
         uploadStep: 1,
         progBarPercent: 0,
-        invoiceNumber: '',
+        minInvoiceNumber: 0,
         bulk_id: '',
         headers: [],
     }
@@ -110,9 +110,10 @@ class BulkUpload extends Component {
                 console.log([data])
                 //can change testData to mach any array you set in the state
                 console.log("invoice #: "+typeof(data));
-                const invoiceNumber = (parseInt(data) + 1).toString().padStart(8, '0');
-                console.log(`inv #: ${invoiceNumber}`);
-                this.setState({ invoiceNumber: invoiceNumber });
+                // const minInvoiceNumber = (parseInt(data) + 1).toString().padStart(8, '0');
+                const minInvoiceNumber = parseInt(data);
+                console.log(`inv #: ${minInvoiceNumber}`);
+                this.setState({ minInvoiceNumber: minInvoiceNumber });
                 console.log("Invoice number has been recieved");
 
             })
@@ -147,6 +148,7 @@ class BulkUpload extends Component {
 
         const labeledData = []; // array of labeled invoice objects
         const headers = [...this.state.headers];
+        let invNum = this.state.minInvoiceNumber;
         for (const inv of copiedData) {
             const labeledInv = {};
             for (let i = 0; i < headers.length; i++) {
@@ -157,7 +159,8 @@ class BulkUpload extends Component {
             labeledInv.uploadTime = uploadDate;
             labeledInv.uploadTimeNum = `${currTime}`;
             labeledInv.bulk_id = `${this.state.bulk_id}`;
-            labeledInv.invoiceNumber = `${this.state.invoiceNumber}`
+            labeledInv.invoiceNumber = (parseInt(invNum) + 1).toString().padStart(8, '0');
+            invNum++;
             labeledData.push(labeledInv);
             console.log(labeledInv);
         }
